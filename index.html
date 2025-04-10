@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de TMB</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    input, select {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    p {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Taxa Metabólica Basal (TMB)</h1>
+    <input type="number" id="peso" placeholder="Peso (kg)" step="0.1">
+    <input type="number" id="altura" placeholder="Altura (cm)" step="0.1">
+    <input type="number" id="idade" placeholder="Idade (anos)">
+    <select id="sexo">
+      <option value="masculino">Masculino</option>
+      <option value="feminino">Feminino</option>
+    </select>
+    <button onclick="calcularTMB()">Calcular</button>
+    <p id="resultadoTMB"></p>
+  </div>
+
+  <script>
+    function calcularTMB() {
+      // Captura os valores dos inputs
+      const peso = parseFloat(document.getElementById("peso").value);
+      const altura = parseFloat(document.getElementById("altura").value);
+      const idade = parseInt(document.getElementById("idade").value);
+      const sexo = document.getElementById("sexo").value;
+
+      // Verifica se os valores são válidos
+      if (isNaN(peso) || isNaN(altura) || isNaN(idade) || peso <= 0 || altura <= 0 || idade <= 0) {
+        alert("Por favor, insira valores válidos para peso, altura e idade.");
+        return;
+      }
+
+      // Calcula a TMB usando a fórmula de Harris-Benedict
+      let tmb;
+      if (sexo === "masculino") {
+        tmb = 88.36 + (13.4 * peso) + (4.8 * altura) - (5.7 * idade);
+      } else {
+        tmb = 447.6 + (9.2 * peso) + (3.1 * altura) - (4.3 * idade);
+      }
+
+      // Exibe o resultado da TMB
+      document.getElementById("resultadoTMB").textContent = `Sua Taxa Metabólica Basal é: ${tmb.toFixed(2)} calorias/dia.`;
+    }
+  </script>
+</body>
+</html>
